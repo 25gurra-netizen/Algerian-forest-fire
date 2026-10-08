@@ -1,1 +1,1 @@
-TODO: update task1-script.py to implement task 2
+Task 1 is done and working on Task 2

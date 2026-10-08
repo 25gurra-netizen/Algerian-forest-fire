@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import StandardScaler
-from sklearn.impute import SimpleImputer, KNNImputer
 
 
 def load_and_clean_raw_csv(filepath):
@@ -202,7 +201,7 @@ def data_visualization(df):
 
     plt.title("Correlation Matrix of Features and Fire Occurrence")
     plt.tight_layout()
-    plt.savefig("correlation_matrix.png")
+    plt.savefig("results/task1/correlation_matrix.png")
     plt.close()
 
     print("-> Saved 'correlation_matrix.png'")
@@ -221,14 +220,14 @@ def data_visualization(df):
     plt.xlabel("Fire Class")
     plt.ylabel("FFMC Value")
     plt.tight_layout()
-    plt.savefig("ffmc_distribution.png")
+    plt.savefig("results/task1/ffmc_distribution.png")
     plt.close()
 
     print("-> Saved 'ffmc_distribution.png'")
 
 def main():
 
-    file_path = "Algerian_forest_fires_dataset_UPDATE.csv"
+    file_path = "data/raw/Algerian_forest_fires_dataset_UPDATE.csv"
     df = load_and_clean_raw_csv(file_path)
 
     while True:
