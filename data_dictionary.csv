@@ -1,0 +1,16 @@
+Feature,Data type,Role
+Region,object,Region information
+day,int64,Input feature
+month,int64,Input feature
+year,int64,Input feature
+Temperature,int64,Input feature
+RH,int64,Input feature
+Ws,int64,Input feature
+Rain,float64,Input feature
+FFMC,float64,Input feature
+DMC,float64,Input feature
+DC,float64,Input feature
+ISI,float64,Input feature
+BUI,float64,Input feature
+FWI,float64,Input feature
+Classes,object,Target
