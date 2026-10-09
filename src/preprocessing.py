@@ -1,8 +1,6 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.preprocessing import StandardScaler
 
 
 def load_and_clean_raw_csv(filepath):
@@ -44,7 +42,7 @@ def load_and_clean_raw_csv(filepath):
 
 def data_loading_and_initial_exploration(df):
     print("1: DATA LOADING & INITIAL EXPLORATION")
-    
+
     print(f"Dataset Shape: {df.shape[0]} rows, {df.shape[1]} columns\n")
 
     print("First 5 rows:")
@@ -98,8 +96,11 @@ def missing_values(df):
     print("Missing values per numeric feature:")
     print(missing_counts)
 
+
 def preprocessing_and_selection(df):
     print("4: FEATURE PREPROCESSING & SELECTION")
+
+    df = df.copy()
 
     df['Classes'] = df['Classes'].str.strip()
 
@@ -123,7 +124,8 @@ def preprocessing_and_selection(df):
 
     categorical_cols = ['Region']
 
-    X = df[numerical_cols + categorical_cols]
+    # Select numerical and categorical features.
+    X = df[numerical_cols + categorical_cols].copy()
     y = df['Target']
 
     print("Target:")
@@ -136,13 +138,7 @@ def preprocessing_and_selection(df):
     print("\nCategorical features:")
     print(categorical_cols)
 
-    scaler = StandardScaler()
-
-    X_numerical_scaled = pd.DataFrame(
-        scaler.fit_transform(X[numerical_cols]),
-        columns=numerical_cols
-    )
-
+    # Encode the categorical Region feature.
     X_categorical = pd.get_dummies(
         X[categorical_cols],
         columns=categorical_cols,
@@ -150,20 +146,27 @@ def preprocessing_and_selection(df):
     )
 
     X_categorical = X_categorical.rename(
-        columns={ 'Region_0': 'Bejaia',
-                  'Region_1': 'Sidi_Bel_Abbes' }
+        columns={
+            'Region_0': 'Bejaia',
+            'Region_1': 'Sidi_Bel_Abbes'
+        }
     )
 
+    # Combine numerical and encoded categorical features.
     X_processed = pd.concat(
-        [X_numerical_scaled, X_categorical],
+        [X[numerical_cols], X_categorical],
         axis=1
     )
 
-    print("\nProcessed features:")
+    print("\nProcessed features (not scaled):")
     print(list(X_processed.columns))
 
     print("\nFirst 3 rows of processed data:")
     print(X_processed.head(3))
+
+    print("\nTarget values:")
+    print(y.head(3))
+
 
 def data_visualization(df):
     print("5: DATA VISUALIZATION")
@@ -225,6 +228,54 @@ def data_visualization(df):
 
     print("-> Saved 'ffmc_distribution.png'")
 
+def save_cleaned_data(df):
+    print("6. Saving cleaned dataset")
+
+    df = df.copy()
+
+    # Remove whitespace from class labels.
+    df['Classes'] = df['Classes'].str.strip()
+
+    # Convert numerical features to numeric types.
+    numerical_cols = [
+        'Temperature',
+        'RH',
+        'Ws',
+        'Rain',
+        'FFMC',
+        'DMC',
+        'DC',
+        'ISI',
+        'BUI',
+        'FWI'
+    ]
+
+    for col in numerical_cols:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
+
+    # Encode the target variable.
+    df['Target'] = df['Classes'].map({
+        'not fire': 0,
+        'fire': 1
+    })
+
+    # Remove rows with missing values in relevant columns.
+    required_cols = numerical_cols + ['Classes', 'Target', 'Region']
+    df = df.dropna(subset=required_cols)
+
+    # Remove columns that should not be used as features.
+    df = df.drop(columns=['day', 'month', 'year', 'Classes'])
+
+    # Save the cleaned dataset.
+    output_path = "data/processed/forest_fires_cleaned.csv"
+
+    df.to_csv(output_path, index=False)
+
+    print(f"Cleaned dataset saved to: {output_path}")
+    print(f"Dataset shape: {df.shape}")
+    print("\nFirst 5 rows:")
+    print(df.head())
+
 def main():
 
     file_path = "data/raw/Algerian_forest_fires_dataset_UPDATE.csv"
@@ -237,7 +288,8 @@ def main():
         print("3. Missing values & imputation")
         print("4. Feature preprocessing")
         print("5. Visualization")
-        print("6. Run all steps")
+        print("6. saving cleaned dataset")
+        print("7. Run all steps")
         print("0. Exit")
 
         choice = input("\nEnter your choice: ")
@@ -259,11 +311,15 @@ def main():
                 data_visualization(df)
 
             case "6":
+                save_cleaned_data(df)
+
+            case "7":
                 data_loading_and_initial_exploration(df)
                 categorical_values_and_data_types(df)
                 missing_values(df)
                 preprocessing_and_selection(df)
                 data_visualization(df)
+                save_cleaned_data(df)
 
             case "0":
                 print("Exiting...")
