@@ -127,7 +127,7 @@ def save_results(
             validation_accuracy,
             test_accuracy,
         ],
-        "F1": [
+        "F1-score": [
             validation_f1,
             test_f1,
         ],

@@ -1,3 +1,3 @@
-Dataset,Accuracy,F1
+Dataset,Accuracy,F1-score
 Validation,0.9444444444444444,0.95
 Test,0.8918918918918919,0.9090909090909091
