@@ -43,7 +43,7 @@ def load_data():
 def train_model(X_train, y_train):
 
     model = RandomForestClassifier(
-        n_estimators=100,
+        n_estimators=6,
         random_state=42,
     )
 
