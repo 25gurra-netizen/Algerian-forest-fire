@@ -45,7 +45,7 @@ def train_model(X_train, y_train):
 
     model = MLPClassifier(
         hidden_layer_sizes=(10),
-        max_iter=1000,
+        max_iter=500,
         random_state=42,
     )
 
