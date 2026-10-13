@@ -2,7 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
 def load_and_clean_raw_csv(filepath):
     with open(filepath, "r") as f:
         raw_lines = f.readlines()
@@ -39,7 +38,6 @@ def load_and_clean_raw_csv(filepath):
 
     return pd.DataFrame(cleaned_rows, columns=headers)
 
-
 def data_loading_and_initial_exploration(df):
     print("1: DATA LOADING & INITIAL EXPLORATION")
 
@@ -56,7 +54,6 @@ def data_loading_and_initial_exploration(df):
 
     print("\nStatistical summary:")
     print(df.astype(str).describe())
-
 
 def categorical_values_and_data_types(df):
     print("2: HANDLING CATEGORICAL VALUES & DATA TYPES")
@@ -82,7 +79,6 @@ def categorical_values_and_data_types(df):
     print("\nDataset Summary Statistics:")
     print(df[num_cols].describe().T[['mean', 'std', 'min', '50%', 'max']])
 
-
 def missing_values(df):
     print("3: MISSING VALUE ANALYSIS & IMPUTATION")
 
@@ -95,7 +91,6 @@ def missing_values(df):
 
     print("Missing values per numeric feature:")
     print(missing_counts)
-
 
 def preprocessing_and_selection(df):
     print("4: FEATURE PREPROCESSING & SELECTION")
@@ -166,7 +161,6 @@ def preprocessing_and_selection(df):
 
     print("\nTarget values:")
     print(y.head(3))
-
 
 def data_visualization(df):
     print("5: DATA VISUALIZATION")
@@ -277,7 +271,6 @@ def save_cleaned_data(df):
     print(df.head())
 
 def main():
-
     file_path = "data/raw/Algerian_forest_fires_dataset_UPDATE.csv"
     df = load_and_clean_raw_csv(file_path)
 
@@ -327,7 +320,6 @@ def main():
 
             case _:
                 print("Invalid choice. Please try again.")
-
 
 if __name__ == "__main__":
     main()

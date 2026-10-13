@@ -14,15 +14,11 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
-
 DATA_DIR = Path("data/processed/splits")
 RESULTS_DIR = Path("results/task2/voting_classifier")
 TARGET = "Target"
 
-
 def load_data():
-    """Load the scaled train, validation, and test datasets."""
-
     train = pd.read_csv(DATA_DIR / "train_scaled.csv")
     validation = pd.read_csv(DATA_DIR / "validation_scaled.csv")
     test = pd.read_csv(DATA_DIR / "test_scaled.csv")
@@ -45,10 +41,7 @@ def load_data():
         y_test,
     )
 
-
 def create_model():
-    """Create the individual classifiers and the Voting Classifier."""
-
     decision_tree = DecisionTreeClassifier(
         random_state=42
     )
@@ -80,10 +73,7 @@ def create_model():
 
     return model
 
-
 def evaluate_model(model, X, y, dataset_name):
-    """Evaluate the model and return its metrics and confusion matrix."""
-
     predictions = model.predict(X)
 
     accuracy = accuracy_score(y, predictions)
@@ -108,7 +98,6 @@ def evaluate_model(model, X, y, dataset_name):
 
     return accuracy, f1, confusion
 
-
 def save_results(
     validation_accuracy,
     validation_f1,
@@ -117,7 +106,6 @@ def save_results(
     test_f1,
     test_cm,
 ):
-    """Save metrics and confusion matrices to the results directory."""
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -154,10 +142,7 @@ def save_results(
         RESULTS_DIR / "test_confusion_matrix.csv"
     )
 
-
 def main():
-    """Train and evaluate the Voting Classifier."""
-
     (
         X_train,
         y_train,
@@ -201,7 +186,6 @@ def main():
         test_f1,
         test_cm,
     )
-
 
 if __name__ == "__main__":
     main()

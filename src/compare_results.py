@@ -4,10 +4,8 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 
-
 RESULTS_DIR = Path("results/task2")
 COMPARISON_DIR = RESULTS_DIR / "comparison"
-
 
 ALGORITHMS = {
     "Decision Tree": "decision_tree",
@@ -18,10 +16,7 @@ ALGORITHMS = {
     "Voting Classifier": "voting_classifier",
 }
 
-
 def load_results():
-    """Load the metrics.csv file from each algorithm."""
-
     results = []
 
     for algorithm_name, folder_name in ALGORITHMS.items():
@@ -43,10 +38,7 @@ def load_results():
 
     return pd.DataFrame(results)
 
-
 def save_combined_results(results):
-    """Save all algorithm results to one CSV file."""
-
     COMPARISON_DIR.mkdir(parents=True, exist_ok=True)
 
     output_path = COMPARISON_DIR / "combined_metrics.csv"
@@ -60,8 +52,6 @@ def save_combined_results(results):
 
 
 def create_accuracy_plot(results):
-    """Create a bar plot comparing accuracy."""
-
     pivot = results.pivot(
         index="Algorithm",
         columns="Dataset",
@@ -89,10 +79,7 @@ def create_accuracy_plot(results):
 
     print(f"Accuracy plot saved to: {output_path}")
 
-
 def create_f1_plot(results):
-    """Create a bar plot comparing F1-score."""
-
     pivot = results.pivot(
         index="Algorithm",
         columns="Dataset",
@@ -120,10 +107,7 @@ def create_f1_plot(results):
 
     print(f"F1-score plot saved to: {output_path}")
 
-
 def print_results(results):
-    """Print the combined results in a readable format."""
-
     print("\nALL RESULTS")
     print("=" * 60)
 
@@ -140,10 +124,7 @@ def print_results(results):
         test_results.to_string(index=False)
     )
 
-
 def main():
-    """Load, combine, save, and plot algorithm results."""
-
     results = load_results()
 
     if results.empty:

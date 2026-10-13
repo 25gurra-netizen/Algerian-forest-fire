@@ -10,7 +10,6 @@ from sklearn.metrics import (
     classification_report,
 )
 
-
 # Project paths
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -19,11 +18,9 @@ RESULT_DIR = PROJECT_ROOT/"results"/"task2"/"knn"
 
 TARGET = "Target"
 
-
 def load_data():
     # Load training, validation and test datasets
     # k-NN uses scaled data because it relies on distances.
-
     train_df = pd.read_csv(DATA_DIR / "train_scaled.csv")
     val_df = pd.read_csv(DATA_DIR / "validation_scaled.csv")
     test_df = pd.read_csv(DATA_DIR / "test_scaled.csv")
@@ -41,7 +38,6 @@ def load_data():
     return X_train, y_train, X_val, y_val, X_test, y_test
 
 def train_model(X_train, y_train):
-
     model = KNeighborsClassifier(
         n_neighbors=5
     )
@@ -51,7 +47,6 @@ def train_model(X_train, y_train):
     return model
 
 def evaluate_model(model, X, y, dataset_name):
-
     predictions = model.predict(X)
 
     accuracy = accuracy_score(y, predictions)
@@ -74,7 +69,6 @@ def evaluate_model(model, X, y, dataset_name):
     return predictions, accuracy, f1
 
 def save_results(results):
-
     RESULT_DIR.mkdir(parents=True, exist_ok=True)
 
     results_df = pd.DataFrame(results)
@@ -85,7 +79,6 @@ def save_results(results):
     print(f"\nSaved metrics: {output_path}")
 
 def main():
-
     print("=" * 50)
     print("K-NEAREST NEIGHBORS CLASSIFIER")
     print("=" * 50)
@@ -130,7 +123,6 @@ def main():
     save_results(results)
 
     print("\nk-NN pipeline completed successfully.")
-
 
 if __name__ == "__main__":
     main()

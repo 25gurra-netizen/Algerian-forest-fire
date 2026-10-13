@@ -10,7 +10,6 @@ from sklearn.metrics import (
     classification_report,
 )
 
-
 # Project paths
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -19,10 +18,8 @@ RESULT_DIR = PROJECT_ROOT / "results" / "task2" / "random_forest"
 
 TARGET = "Target"
 
-
 def load_data():
     # Load training, validation and test datasets
-
     train_df = pd.read_csv(DATA_DIR / "train.csv")
     val_df = pd.read_csv(DATA_DIR / "validation.csv")
     test_df = pd.read_csv(DATA_DIR / "test.csv")
@@ -39,9 +36,7 @@ def load_data():
 
     return X_train, y_train, X_val, y_val, X_test, y_test
 
-
 def train_model(X_train, y_train):
-
     model = RandomForestClassifier(
         n_estimators=6,
         random_state=42,
@@ -51,9 +46,7 @@ def train_model(X_train, y_train):
 
     return model
 
-
 def evaluate_model(model, X, y, dataset_name):
-
     predictions = model.predict(X)
 
     accuracy = accuracy_score(y, predictions)
@@ -75,9 +68,7 @@ def evaluate_model(model, X, y, dataset_name):
 
     return predictions, accuracy, f1
 
-
 def save_results(results):
-
     RESULT_DIR.mkdir(parents=True, exist_ok=True)
 
     results_df = pd.DataFrame(results)
@@ -87,9 +78,7 @@ def save_results(results):
 
     print(f"\nSaved metrics: {output_path}")
 
-
 def main():
-
     print("=" * 50)
     print("RANDOM FOREST CLASSIFIER")
     print("=" * 50)

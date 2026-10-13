@@ -6,7 +6,6 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-
 # Project paths
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -37,8 +36,6 @@ REGION_FEATURES = [
 TARGET = "Target"
 
 def load_and_prepare_data():
-    """Load the cleaned CSV and prepare X and y."""
-
     print("\n1. LOADING AND PREPARING DATA")
 
     if not INPUT_PATH.exists():
@@ -89,8 +86,6 @@ def load_and_prepare_data():
     return X, y
 
 def split_data(X, y):
-    """Split the data into training, validation, and test sets."""
-
     print("\n2. SPLITTING DATA")
 
     # First split: 70% training, 30% temporary data.
@@ -133,8 +128,6 @@ def save_unscaled_data(
     y_val,
     y_test,
 ):
-    """Save the original, unscaled splits."""
-
     print("\n3. SAVING UNSCALED DATA")
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -155,7 +148,6 @@ def save_unscaled_data(
 
         print(f"Saved: {output_path.name}")
 
-
 def scale_and_save_data(
     X_train,
     X_val,
@@ -164,8 +156,6 @@ def scale_and_save_data(
     y_val,
     y_test,
 ):
-    """Scale numerical features and save the scaled splits."""
-
     print("\n4. SCALING DATA")
 
     scaler = StandardScaler()
@@ -221,8 +211,6 @@ def scale_and_save_data(
     print(X_train_scaled[NUMERICAL_FEATURES].std(ddof=0).round(3))
 
 def main():
-    """Run the complete data preparation pipeline."""
-
     X, y = load_and_prepare_data()
 
     (
